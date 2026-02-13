@@ -48,6 +48,7 @@ Rules:
 - Provide a `docker-compose.yml` for MySQL and the App.
 - Use Docker for the standard local environment.
 - Provide a `Dockerfile` for the application.
+- **CSRF**: Disable CSRF `checkOrigin` in `svelte.config.js` (just for demo) to ensure Form Actions work correctly in containerized/mapped port environments.
 - DB Resilience: Handle `DATABASE_URL` parsing errors gracefully and provide helpful fallbacks or error messages.
 
 ### 3.2 Migrations
