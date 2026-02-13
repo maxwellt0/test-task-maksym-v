@@ -3,7 +3,7 @@
   let { children } = $props();
 </script>
 
-<div class="min-h-screen bg-gray-50 font-sans">
+<div class="min-h-screen bg-linear-to-br from-blue-500 to-purple-600 font-sans">
   <header class="bg-white border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center">

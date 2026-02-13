@@ -8,11 +8,12 @@ import {
   FileMigrationProvider,
 } from 'kysely';
 import * as dotenv from 'dotenv';
+import type { Database } from '../src/lib/db/types';
 
 dotenv.config();
 
 async function migrateToLatest() {
-  const db = new Kysely<any>({
+  const db = new Kysely<Database>({
     dialect: new MysqlDialect({
       pool: createPool(process.env.DATABASE_URL!)
     }),
@@ -28,15 +29,7 @@ async function migrateToLatest() {
     }),
   });
 
-  const { error, results } = await migrator.migrateToLatest();
-
-  results?.forEach((it) => {
-    if (it.status === 'Success') {
-      console.log(`migration "${it.migrationName}" was executed successfully`);
-    } else if (it.status === 'Error') {
-      console.error(`failed to execute migration "${it.migrationName}"`);
-    }
-  });
+  const { error } = await migrator.migrateToLatest();
 
   if (error) {
     console.error('failed to migrate');

@@ -12,7 +12,6 @@ async function seed() {
     }),
   });
 
-  console.log('Seeding programs...');
   const programs = [
     { name: 'Winter 2026 Batch', isActive: 1 },
     { name: 'Summer 2026 Batch', isActive: 1 },
@@ -23,7 +22,6 @@ async function seed() {
   
   const dbPrograms = await db.selectFrom('programs').selectAll().execute();
   
-  console.log('Seeding applications...');
   const statuses: ApplicationStatus[] = ['new', 'reviewed', 'accepted', 'rejected'];
   const applications = [];
 
@@ -40,7 +38,6 @@ async function seed() {
 
   await db.insertInto('applications').values(applications).execute();
 
-  console.log('Seeding completed successfully!');
   await db.destroy();
 }
 

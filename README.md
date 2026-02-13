@@ -107,11 +107,14 @@ A `docker-compose.yml` is provided to spin up both the SvelteKit app and a MySQL
 - **DB Password**: `password`
 - **DB Port**: `3310` (Mapped from 3306 in container)
 
+Note: While the project includes a Docker setup for MySQL, it can also connect to any external MySQL instance by providing the appropriate `DATABASE_URL`.
+
 ---
 
 ## Architectural Choices
 
 - **SvelteKit 5**: Used the latest Svelte 5 syntax with runes (`$props`, `$state`, etc.) for reactive state management.
+- **shadcn-svelte Integration**: Implemented Svelte 5-native components (like `Button`) following shadcn principles, using `tailwind-variants` and a centralized `cn` utility for consistent styling.
 - **Kysely**: Used as the type-safe SQL query builder. It provides excellent TypeScript integration and prevents common SQL errors.
 - **Service Layer**: Database logic is encapsulated in `src/lib/server/services/db.ts` to keep route handlers clean and reusable.
 - **Server-Side Rendering (SSR)**: All data fetching and mutations happen on the server to ensure security and performance.
@@ -120,9 +123,24 @@ A `docker-compose.yml` is provided to spin up both the SvelteKit app and a MySQL
 
 ## Future Improvements
 
-- **Authentication**: Add an admin login system (e.g., Auth.js or simple session-based auth).
-- **Pagination**: Implement pagination for applications to handle large datasets.
-- **Filtering & Search**: Add more filters (e.g., by status) and a search bar for startup or founder names.
-- **Audit Log**: Track who changed application statuses and when.
-- **Email Notifications**: Automatically notify founders when their application status changes.
-- **Dashboard**: Add a high-level overview with statistics on application statuses across programs.
+### Functional
+- **Authentication & Authorization**: Implement a secure admin login system (e.g., Auth.js) with Role-Based Access Control (RBAC).
+- **Advanced Filtering**: Enhance the application list with multi-criteria filtering (status, date range, startup category) and full-text search.
+- **Bulk Actions**: Allow admins to update the status of multiple applications simultaneously.
+- **Application History**: Maintain a full audit trail of all changes made to an application, including who made the change and when.
+- **Automated Workflows**: Integrate email or Slack notifications for founders and admins when application statuses change (with a "silent" option for admins to disable notifications)
+- **Admin Dashboard**: Provide high-level analytics and visualizations of application trends across different programs.
+
+### Design & UX
+- **Responsive Design**: Further optimize the UI for seamless use across mobile, tablet, and desktop devices.
+- **Accessibility (a11y)**: Ensure full compliance with WCAG 2.1 standards for better inclusivity.
+- **Enhanced UI/UX**: Implement more intuitive navigation, skeleton loaders for better perceived performance, and a more refined color palette with support for Dark Mode.
+
+### System & Quality
+- **Test Suite Expansion**:
+    - **Unit Tests**: Maintain and expand the current test coverage for server-side logic (already initiated).
+    - **End-to-End (E2E) Tests**: Implement Playwright tests for critical user flows.
+- **CI/CD Pipeline**: Automate testing, linting, and deployment processes using GitHub Actions or GitLab CI.
+- **Database Resilience**: Implement automated backups and point-in-time recovery (PITR).
+- **Security Enhancements**: Add rate limiting, CSRF protection (native in SvelteKit), and regular dependency vulnerability scanning.
+- **Observability**: Integrate centralized logging and performance monitoring (e.g., Sentry, New Relic) for proactive issue resolution.

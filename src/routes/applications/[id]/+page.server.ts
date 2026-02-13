@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ params }) => {
       program
     };
   } catch (e) {
-    if ((e as any).status) throw e; // Re-throw SvelteKit errors
+    if (e && typeof e === 'object' && 'status' in e) throw e; // Re-throw SvelteKit errors
     console.error(`Database connection error in /applications/${params.id}:`, e);
     throw error(500, {
       message: 'Database connection failed.'
@@ -39,7 +39,12 @@ export const actions: Actions = {
       return fail(400, { message: 'Invalid status' });
     }
 
-    await updateApplicationStatus(id, status);
+    const result = await updateApplicationStatus(id, status);
+    console.log(`Update result for app ${id} to ${status}:`, result);
+
+    if (!result || (result.numUpdatedRows !== undefined && result.numUpdatedRows === 0n)) {
+       return fail(500, { message: 'Failed to update status. Application might not exist.' });
+    }
 
     return { success: true };
   }
