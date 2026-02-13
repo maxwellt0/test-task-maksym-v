@@ -8,6 +8,8 @@
         size = "default",
         children,
         href,
+        type = "button",
+        onclick,
         ...rest
     }: ButtonProps = $props();
 </script>
@@ -16,13 +18,16 @@
     <a
         {href}
         class={cn(buttonVariants({ variant, size }), className)}
+        {onclick}
         {...rest}
     >
         {@render children?.()}
     </a>
 {:else}
     <button
+        {type}
         class={cn(buttonVariants({ variant, size }), className)}
+        {onclick}
         {...rest}
     >
         {@render children?.()}

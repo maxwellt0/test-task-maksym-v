@@ -56,6 +56,7 @@
         variant="outline" 
         size="sm" 
         onclick={copyToClipboard}
+        type="button"
         class="flex items-center gap-2 bg-white/10 text-white border-white/20 hover:bg-white/20"
       >
         {#if copied}
@@ -164,6 +165,7 @@
               type="submit"
               name="status"
               value={status}
+              disabled={data.application.status === status}
               variant={data.application.status === status ? 'default' : 'outline'}
               class={cn(
                 "justify-start h-11 transition-all",

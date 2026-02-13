@@ -27,11 +27,20 @@ const buttonVariants = tv({
     },
 });
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 type Variant = VariantProps<typeof buttonVariants>["variant"];
 type Size = VariantProps<typeof buttonVariants>["size"];
 
-type Props = any;
+type Props = {
+    class?: string;
+    variant?: Variant;
+    size?: Size;
+    children?: import("svelte").Snippet;
+    href?: string;
+    type?: "button" | "submit" | "reset";
+    onclick?: (event: MouseEvent) => void;
+    [key: string]: any;
+};
 
 import Button from "./button.svelte";
 
